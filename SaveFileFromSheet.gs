@@ -7,18 +7,20 @@ function generateTextFile() {
   for (var i = 0; i < data.length; i++) {
     var line = data[i][0].toString().trim() + " " + data[i][1].toString().trim();
     
-    for (var j = 2; j < data[i].length; j++) {
-      line += ", " + data[i][j].toString().trim(); // Pozostałe kolumny połączone przecinkiem
+    for (var j = 2; j < 7; j++) {
+      line += ", " + data[i][j].toString().trim();
     }
     
-    line += "д. " + data[i][7].toString().trim(); // Kolumna H z dodatkiem "д. "
+    line += ", д. " + data[i][7].toString().trim(); 
+    line += ", " + data[i][8].toString().trim();
 
     textLines.push(line);
   }
   
-  var textContent = textLines.join('\n'); // Łączenie linii tekstu
+  var textContent = textLines.join('\n');
   
-  var fileName = "Test Doc " + new Date().toString().slice(0,15);//Create a new file name with date on end
+  var fileName = `names with id${new Date().toString().slice(0,15)}.txt`;
 
-  newFile = DriveApp.createFile(fileName, textContent)
+  var blob = Utilities.newBlob(textContent, "text/txt", fileName);
+  DriveApp.createFile(blob);
 }
